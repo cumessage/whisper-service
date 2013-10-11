@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prosper.whisper.service.bean.User;
@@ -24,18 +25,29 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@RequestMapping(value="unchecked", method=RequestMethod.POST)
+	@ResponseBody
+	public View register(
+			@RequestParam("email") String email,
+			@RequestParam("username") String userName, 
+			@RequestParam("password") String password) { 
+		// TODO validate
+		userService.register(new User(email, userName, password));
+		return new View();
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public View register(@ModelAttribute("user") User user) {
+	public View varify(@RequestParam("id") long id, @RequestParam("code") String code) {
 		// TODO validate
-		userService.register(user);
+		userService.varify(id, code);
 		return new View();
 	}
 	
 	@RequestMapping(value="/login")
-	public View login(String userName, String password) {
+	public View login(@RequestParam("email")String email, @RequestParam("password")String password) {
 		// TODO validate
-		userService.login(userName, password);
+		userService.login(email, password);
 		return new View();
 	}
 	
@@ -56,7 +68,7 @@ public class UserController {
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public View updateUser(@PathVariable("id") long id) {
 		// TODO validate
-		userService.updateUser(new User(id, "", ""));
+		userService.updateUser(new User(id, "", "", ""));
 		return new View();
 	}
 	

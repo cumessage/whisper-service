@@ -8,20 +8,47 @@ public class User {
 	
 	private String password;
 	
-	private String name;
+	private String email;
+	
+	private String code;
+	
+	private boolean isVarified;
+	
+	private boolean isClosed;
 	
 	private String instruction;
 	
-	private String wishes;
+	private long lastLogin;
+
+	private long lastUpdate;
 	
-	public User() {	}
+	private long createTime;
 	
-	public User(String userName, String password) {
-		this(-1, userName, password);
+	private long varifyTime;
+	
+	public User() {	
+		setId(0);
+		setUserName("");
+		setPassword("");
+		setEmail("");
+		setCode("");
+		setClosed(true);
+		setVarified(true);
+		setInstruction("");
+		setLastLogin(0);
+		setLastUpdate(0);
+		setCreateTime(0);
+		setVarifyTime(0);
 	}
 	
-	public User(long id, String userName, String password) {
+	public User(String email, String userName, String password) {
+		this(-1, email, userName, password);
+	}
+	
+	public User(long id, String email, String userName, String password) {
+		this();
 		setId(id);
+		setEmail(email);
 		setUserName(userName);
 		setPassword(password);
 	}
@@ -58,12 +85,68 @@ public class User {
 		this.instruction = instruction;
 	}
 
-	public String getWishes() {
-		return wishes;
+	public boolean isVarified() {
+		return isVarified;
 	}
 
-	public void setWishes(String wishes) {
-		this.wishes = wishes;
+	public void setVarified(boolean isVarified) {
+		this.isVarified = isVarified;
 	}
-	
+
+	public boolean isClosed() {
+		return isClosed;
+	}
+
+	public void setClosed(boolean isClosed) {
+		this.isClosed = isClosed;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public long getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(long lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public long getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(long lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
+	}
+
+	public long getVarifyTime() {
+		return varifyTime;
+	}
+
+	public void setVarifyTime(long varifyTime) {
+		this.varifyTime = varifyTime;
+	}
+
 }

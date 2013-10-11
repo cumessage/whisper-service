@@ -4,18 +4,49 @@ import java.util.List;
 
 import com.prosper.whisper.service.bean.User;
 import com.prosper.whisper.service.dao.UserDao;
+import com.prosper.whisper.service.exception.DataIsExistException;
 import com.prosper.whisper.service.exception.DataNotExistException;
+import com.prosper.whisper.service.exception.InvalidParamException;
+import com.prosper.whisper.service.exception.OperationIsDoneException;
 
 public class UserService {
 	
 	private UserDao userDao;
 	
 	public void register(User user) {
-		userDao.insert(user);
+		User userDb = userDao.getByEmail(user.getEmail());
+		long now = System.currentTimeMillis();
+		if (userDb == null) {
+			user.setCreateTime(now);
+			user.setLastUpdate(now);
+			userDao.insert(user);
+		} else if (!userDb.isVarified()) {
+			user.setId(userDb.getId());
+			user.setLastUpdate(now);
+			userDao.updataUser(user);
+		} else {
+			throw new DataIsExistException();
+		}
 	}
 	
-	public void login(String userName, String password) {
-		User user = userDao.getByUserNameAndPassword(userName, password);
+	public void varify(long id, String code) {
+		User user = userDao.getById(id);
+		long now = System.currentTimeMillis();
+		if (user.isVarified()) {
+			throw new OperationIsDoneException();
+		}
+		if (!code.equals(user.getCode())) {
+			throw new InvalidParamException();
+		}
+		user.setVarified(true);
+		user.setCode("");
+		user.setLastUpdate(now);
+		user.setVarifyTime(now);
+		userDao.updataUser(user);
+	}
+	
+	public void login(String email, String password) {
+		User user = userDao.getByEmailAndPass(email, password);
 		if (user == null) {
 			throw new DataNotExistException();
 		}
@@ -45,5 +76,7 @@ public class UserService {
 	public void addMet(long id, long metId) {
 		userDao.addMet(id, metId);
 	}
+
+	
 	
 }

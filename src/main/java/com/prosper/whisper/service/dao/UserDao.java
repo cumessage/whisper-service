@@ -3,17 +3,22 @@ package com.prosper.whisper.service.dao;
 import java.util.List;
 
 import com.prosper.whisper.service.bean.User;
+import com.prosper.whisper.service.mapper.UserMapper;
 
 public class UserDao {
+	
+	private UserMapper userMapper;
 
 	public void insert(User user) {
-		// TODO Auto-generated method stub
-		 
+		userMapper.insertOne(user);
 	}
 
-	public User getByUserNameAndPassword(String userName, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getByEmail(String email) {
+		return userMapper.getByEmail(email);
+	}
+	
+	public User getByEmailAndPass(String email, String password) {
+		return userMapper.getByEmailAndPass(email, password);
 	}
 
 	public User getById(long id) {
@@ -40,6 +45,8 @@ public class UserDao {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 	
 	
