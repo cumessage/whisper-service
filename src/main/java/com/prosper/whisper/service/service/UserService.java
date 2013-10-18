@@ -2,6 +2,9 @@ package com.prosper.whisper.service.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.prosper.whisper.service.bean.User;
 import com.prosper.whisper.service.dao.UserDao;
 import com.prosper.whisper.service.exception.DataIsExistException;
@@ -9,8 +12,10 @@ import com.prosper.whisper.service.exception.DataNotExistException;
 import com.prosper.whisper.service.exception.InvalidParamException;
 import com.prosper.whisper.service.exception.OperationIsDoneException;
 
+@Service
 public class UserService {
 	
+	@Autowired
 	private UserDao userDao;
 	
 	public void register(User user) {

@@ -2,11 +2,16 @@ package com.prosper.whisper.service.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.prosper.whisper.service.bean.User;
 import com.prosper.whisper.service.mapper.UserMapper;
 
+@Repository
 public class UserDao {
 	
+	@Autowired
 	private UserMapper userMapper;
 
 	public void insert(User user) {
